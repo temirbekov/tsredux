@@ -3,10 +3,30 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {Provider} from 'react-redux';
+import {createStore, applyMiddleware, compose} from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
+import thunk from 'redux-thunk'
+
+import createRootReducer from './store';
+import rootReducer from "./store";
+const middlewares = [thunk]
+
+const store = createStore(
+  createRootReducer,
+  {},
+  composeWithDevTools(applyMiddleware(...middlewares)),
+)
+
+type rootReducerType = typeof rootReducer;
+export type AppStateType = ReturnType<rootReducerType>
+export type AppDispatch = typeof store.dispatch
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

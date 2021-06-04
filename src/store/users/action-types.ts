@@ -1,0 +1,3 @@
+//NEWS
+export const USERS_LOADING = 'USERS_LOADING';
+export const USERS_SET_USERS = 'USERS_SET_USERS';
