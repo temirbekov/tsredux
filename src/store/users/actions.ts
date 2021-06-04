@@ -1,20 +1,24 @@
-import {USERS_LOADING, USERS_SET_USERS} from "./action-types";
+import { USERS_LOADING, USERS_SET_USERS} from "./action-types";
 import { UserType } from "./reducer";
 import {userApi} from '../../api/users'
-import { ThunkAction } from "redux-thunk";
-import {AppStateType} from "../../index";
+import { BaseThunkType, InferActionsTypes } from "..";
 
-export type UserActionType = {
-  type: typeof USERS_SET_USERS | typeof USERS_LOADING
-  payload: any
+
+
+const actions = {
+  setUsers : (users: Array<UserType>) => ({
+    type: USERS_SET_USERS,
+    payload: users,
+  } as const),
+  setLoading: (bool: boolean) => ({
+    type: USERS_LOADING,
+    payload: bool
+  } as const)
 }
 
-export const setUsers = (users: Array<UserType>): UserActionType => ({
-  type: USERS_SET_USERS,
-  payload: users,
-});
-
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, UserActionType>
+export const usersActions = actions;
+export type UsersActions = InferActionsTypes<typeof actions>;
+type ThunkType = BaseThunkType<UsersActions>
 
 export const fetchUsers = (): ThunkType => async (dispatch) => {
   // dispatch({
@@ -27,10 +31,7 @@ export const fetchUsers = (): ThunkType => async (dispatch) => {
 
     const {data} = response.data;
 
-    dispatch({
-      type: USERS_SET_USERS,
-      payload: data,
-    });
+    dispatch(actions.setUsers(data));
 
 
   } catch (err) {

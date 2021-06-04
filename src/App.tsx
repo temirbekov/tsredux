@@ -3,9 +3,10 @@ import logo from './logo.svg';
 import './App.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { initialStateType } from './reducers/news';
-import {fetchUsers, setUsers} from "./store/users/actions";
+import {fetchUsers} from "./store/users/actions";
 import { AppDispatch } from '.';
-import {useAppDispatch, useAppSelector} from './hooks/redux';
+import { useAppSelector} from './hooks/redux';
+
 
 type iniType = {
   type: string
@@ -16,7 +17,7 @@ console.log(initi())
 
 function App() {
 
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchUsers())

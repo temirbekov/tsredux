@@ -1,7 +1,7 @@
 import {
   USERS_LOADING, USERS_SET_USERS,
 } from './action-types';
-import { UserActionType } from './actions';
+import { UsersActions } from './actions';
 
 export type UserType = {
   id: number,
@@ -16,12 +16,12 @@ const initialState = {
 
 export type initialStateType = typeof initialState;
 
-const usersReducer = (state: initialStateType = initialState, action: UserActionType) : initialStateType => {
+const usersReducer = (state: initialStateType = initialState, action: UsersActions) : initialStateType => {
   switch (action.type) {
     case USERS_LOADING: {
       return {
         ...state,
-        list: action.payload,
+        loading: action.payload,
       };
     }
     case USERS_SET_USERS: {
